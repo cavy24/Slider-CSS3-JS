@@ -1451,6 +1451,7 @@
 	.main_description_examples_slider_div_slider img	{
     max-width: 100%;
 	height: auto;
+	border: 3px solid #ffffff
 	}
 	
 	
@@ -1564,4 +1565,8 @@
 			max-width: 479px
 		}
 		
+		.arrow-left,
+		.arrow-right {
+			top: 50%
+		}
 	}

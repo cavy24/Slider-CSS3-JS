@@ -1,13 +1,17 @@
-window.onload = clearAnimationSize;
+function showSlides() {
+  
+	window.onload = clearAnimationSize;
 	
 	let	divSliders = document.querySelector('.main_description_examples_slider'),
 		divSlidersAnimation = document.querySelector('.main_description_examples_slider_div'),
-		divSlidersSlide = document.querySelectorAll('.main_description_examples_slider_div_slider'),
 		switchAnimation = document.querySelector('.main_description_examples_slider_switch li .li_on'),
-		switchUl = document.querySelector('.main_description_examples_slider_switch ul'),
 		switchLink = document.querySelectorAll('.main_description_examples_slider_switch ul li'),
 		arrowRight = document.getElementById('arrow_right'),
 		arrowLeft = document.getElementById('arrow_left');
+	let numberActiveLink,
+	marginLeftDivAnimationNumPoz,
+	divImgWidthNum,
+	linkNumber;
 	const NOT_ACTIVE_LINK = 'not_active_link',
 		ACTIVE_LINK = 'active_link',
 		CLASS_DIV_ANIMATION = 'main_description_examples_slider_div',
@@ -27,9 +31,9 @@ window.onload = clearAnimationSize;
 	console.log('DOM is ready!');
 	console.log(window.innerWidth);
 	console.log(document.documentElement.clientWidth);
-		if(document.documentElement.clientWidth < 480 || window.innerWidth < 480) {
-			clearAnimation();
-		}
+	if(document.documentElement.clientWidth < 480 || window.innerWidth < 480) {
+		clearAnimation();
+	}
 	};
 	function clearAnimation() {
 		switchAnimation.style.display = 'none';
@@ -39,6 +43,7 @@ window.onload = clearAnimationSize;
 	function goToSlide() {
 		clearAnimation();
 		switchClassLink();
+		let sizeMarginLeft;
 		let numberActiveLink = this.innerText;
 		if(numberActiveLink === 0) sizeMarginLeft = 0;
 		else sizeMarginLeft = -(numberActiveLink * 100) + '%';
@@ -53,26 +58,27 @@ window.onload = clearAnimationSize;
 	function returnAnimation() {
 		getNumberActiveLink();
 		if(document.documentElement.clientWidth >= 480 || window.innerWidth >= 480) {
-		switchClassLink();
-		divSlidersAnimation.classList.remove(CLASS_DIV_ANIMATION);
-		switchAnimation.classList.remove(CLASS_LINK_ANIMATION);
-		void divSlidersAnimation.offsetWidth;//https://css-tricks.com/restart-css-animation/
-		void switchAnimation.offsetWidth;
-		divSlidersAnimation.classList.add(CLASS_DIV_ANIMATION);
-		switchAnimation.classList.add(CLASS_LINK_ANIMATION);
-		divSlidersAnimation.style.animationName = (+numberActiveLink === 0) ? NAME_ANIMATION_SLIDE : (NAME_ANIMATION_SLIDE + '_' + numberActiveLink);
-		divSlidersAnimation.style.webkitAnimationName = (+numberActiveLink === 0) ? NAME_ANIMATION_SLIDE : (NAME_ANIMATION_SLIDE + '_' + numberActiveLink);
-		switchAnimation.style.animationName = (+numberActiveLink === 0) ? NAME_ANIMATION_LINK : (NAME_ANIMATION_LINK + '_' + numberActiveLink);
-		switchAnimation.style.webkitAnimationName = (+numberActiveLink === 0) ? NAME_ANIMATION_LINK : (NAME_ANIMATION_LINK + '_' + numberActiveLink);
-		console.log(divSlidersAnimation.style.animationName, switchAnimation.style.animationName);
-		switchAnimation.style.display = 'block';
+			switchClassLink();
+			divSlidersAnimation.classList.remove(CLASS_DIV_ANIMATION);
+			switchAnimation.classList.remove(CLASS_LINK_ANIMATION);
+			//https://css-tricks.com/restart-css-animation/
+			void divSlidersAnimation.offsetWidth;
+			void switchAnimation.offsetWidth;
+			divSlidersAnimation.classList.add(CLASS_DIV_ANIMATION);
+			switchAnimation.classList.add(CLASS_LINK_ANIMATION);
+			divSlidersAnimation.style.animationName = (+numberActiveLink === 0) ? NAME_ANIMATION_SLIDE : (NAME_ANIMATION_SLIDE + '_' + numberActiveLink);
+			divSlidersAnimation.style.webkitAnimationName = (+numberActiveLink === 0) ? NAME_ANIMATION_SLIDE : (NAME_ANIMATION_SLIDE + '_' + numberActiveLink);
+			switchAnimation.style.animationName = (+numberActiveLink === 0) ? NAME_ANIMATION_LINK : (NAME_ANIMATION_LINK + '_' + numberActiveLink);
+			switchAnimation.style.webkitAnimationName = (+numberActiveLink === 0) ? NAME_ANIMATION_LINK : (NAME_ANIMATION_LINK + '_' + numberActiveLink);
+			console.log(divSlidersAnimation.style.animationName, switchAnimation.style.animationName);
+			switchAnimation.style.display = 'block';
 		}
 	};
 	function getNumberActiveLink() {
-		linksSlideActive.map(link => (link.className === ACTIVE_LINK) && (numberActiveLink = link.innerText));
-		console.log(numberActiveLink);
+    linksSlideActive.map(link => (link.className === ACTIVE_LINK) && (numberActiveLink = link.innerText));
+	console.log(numberActiveLink);
 	};
-		function switchClassLink() {
+	function switchClassLink() {
 		linksSlideActive.map(link => link.className === ACTIVE_LINK && (link.classList.remove(ACTIVE_LINK), link.classList.add(NOT_ACTIVE_LINK)));
 	};
 	function stopAnimation() {
@@ -96,8 +102,8 @@ window.onload = clearAnimationSize;
 	goAnimationAgain();
 	};
 	function showRight() {
+    window.setTimeout(setLinkActiveRight, 150);
 		window.setTimeout(showDivSlideRight, 200);
-		window.setTimeout(setLinkActiveRight, 150);
 	};
 	function showLeft() {
 		window.setTimeout(showDivSlideLeft, 200);
@@ -105,15 +111,14 @@ window.onload = clearAnimationSize;
 	};
 	function showDivSlideRight() {
 		if(marginLeftDivAnimationNumPoz >= 0 && marginLeftDivAnimationNumPoz < divImgWidthNum * 5 - 1) {
-		let nextMarginLeft = +marginLeftDivAnimationNumPoz + divImgWidthNum + 'px';
-		divSlidersAnimation.style.marginLeft = '-' + nextMarginLeft;
-		console.log(nextMarginLeft);
+			let nextMarginLeft = +marginLeftDivAnimationNumPoz + divImgWidthNum + 'px';
+			divSlidersAnimation.style.marginLeft = '-' + nextMarginLeft;
 		};
 	};
 	function showDivSlideLeft() {
 		if(marginLeftDivAnimationNumPoz > 0 && marginLeftDivAnimationNumPoz <= divImgWidthNum * 5 + 1) {
-		let prevMarginLeft = +marginLeftDivAnimationNumPoz - divImgWidthNum + 'px';
-		divSlidersAnimation.style.marginLeft = '-' + prevMarginLeft;
+			let prevMarginLeft = +marginLeftDivAnimationNumPoz - divImgWidthNum + 'px';
+			divSlidersAnimation.style.marginLeft = '-' + prevMarginLeft;
 		};
 	};
 	function setLinkActiveRight() {
@@ -130,8 +135,8 @@ window.onload = clearAnimationSize;
 	function setLinkActiveLeft() {
 		setLinkActive();
 		if(linkNumber > 0) {
-		linksSlideActive[linkNumber - 1].classList.remove(NOT_ACTIVE_LINK);
-		linksSlideActive[linkNumber - 1].classList.add(ACTIVE_LINK);
+			linksSlideActive[linkNumber - 1].classList.remove(NOT_ACTIVE_LINK);
+			linksSlideActive[linkNumber - 1].classList.add(ACTIVE_LINK);
 		}
 		else {
 			linksSlideActive[linkNumber].classList.remove(NOT_ACTIVE_LINK);
@@ -147,9 +152,7 @@ window.onload = clearAnimationSize;
 	};
 	function getWidthDivSlider() {
 		let divImg = document.body.querySelector('.main_description_examples_slider_div_slider');
-		//let divImgStyle = window.getComputedStyle(divImg);
-		//let divImgStyleWidth = divImgStyle.getPropertyValue('width');
-		let divImgWidth = window.getComputedStyle(divImg).width;
+    	let divImgWidth = window.getComputedStyle(divImg).width;
 		divImgWidthNum = Math.round(divImgWidth.split('px', 1).join());
 		console.log('divImgWidthNum =', divImgWidthNum);
 	};
@@ -160,19 +163,14 @@ window.onload = clearAnimationSize;
 		switchClassLink();
 	};
 function getMarginDivAnimation() {
-		//let styleDivAnimation = window.getComputedStyle(divSlidersAnimation);
-		//let styleMarginLeftDivAnimation = styleDivAnimation.getPropertyValue('margin-left');
-		let marginLeftDivAnimation = window.getComputedStyle(divSlidersAnimation).marginLeft;
+		let styleDivAnimation = window.getComputedStyle(divSlidersAnimation);
+		let marginLeftDivAnimation = styleDivAnimation.getPropertyValue('margin-left');
+		console.log(marginLeftDivAnimation);
 		let marginLeftDivAnimationNum = Math.round(marginLeftDivAnimation.split('px', 1).join());
 		if(marginLeftDivAnimationNum === 0 || marginLeftDivAnimationNum === '0' || marginLeftDivAnimationNum === undefined)
-		marginLeftDivAnimationNumPoz = 0;
+			marginLeftDivAnimationNumPoz = 0;
 		else marginLeftDivAnimationNumPoz = marginLeftDivAnimationNum * (-1);
 		console.log('marginLeftDivAnimationNumPoz =', marginLeftDivAnimationNumPoz);
 	};
-	function getWidthDivAnimation() {
-		let widthDivAnimation = window.getComputedStyle(divSlidersAnimation).width;
-		console.log(widthDivAnimation);
-		widthDivAnimationNum = +widthDivAnimation.split('px', 1).join();
-		console.log(widthDivAnimationNum);
-	};
-	
+};
+showSlides();
